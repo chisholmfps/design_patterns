@@ -3,7 +3,7 @@ package strategy;
 import java.util.ArrayList;
 
 /**
- * causes the character to jump while moving.
+ * Movement strategy that simulates jumping movement.
  */
 public class JumpBehavior extends MoveBehavior {
 
@@ -18,10 +18,27 @@ public class JumpBehavior extends MoveBehavior {
     }
 
     /**
-     * Executes the jump-based movement.
+     * Executes the jump animation: up and down with forward movement.
      */
     @Override
     public void move() {
-        move(true);
+        for (int i = 0; i < NUM_MOVES; i++) {
+            clear();
+
+            ArrayList<String> jumped = new ArrayList<>();
+            jumped.add(""); // Adds vertical lift
+            jumped.addAll(character);
+            displayCustom(jumped);
+            sleep(150);
+
+            clear();
+
+            displayCharacter();
+            sleep(150);
+
+            for (int s = 0; s < speed; s++) {
+                pushCharacterForward();
+            }
+        }
     }
 }

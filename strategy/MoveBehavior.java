@@ -29,26 +29,6 @@ public abstract class MoveBehavior {
     public abstract void move();
 
     /**
-     * Moves the character on screen with optional jumping behavior.
-     *
-     * @param jump True if the character should jump while moving.
-     */
-    protected void move(boolean jump) {
-        for (int i = 0; i < NUM_MOVES; i++) {
-            clear();
-            displayCharacter();
-            sleep(300);
-            for (int s = 0; s < speed; s++) {
-                pushCharacterForward();
-            }
-            if (jump) {
-                character.add(0, "");
-                character.remove(character.size() - 1);
-            }
-        }
-    }
-
-    /**
      * Shifts each line of the character one space to the right.
      */
     protected void pushCharacterForward() {
@@ -62,6 +42,17 @@ public abstract class MoveBehavior {
      */
     protected void displayCharacter() {
         for (String line : character) {
+            System.out.println(line);
+        }
+    }
+
+    /**
+     * Displays a temporary visual (e.g., a jump frame).
+     *
+     * @param lines The lines to display.
+     */
+    protected void displayCustom(ArrayList<String> lines) {
+        for (String line : lines) {
             System.out.println(line);
         }
     }
