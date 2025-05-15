@@ -3,7 +3,7 @@ package strategy;
 import java.util.ArrayList;
 
 /**
- * causes the character to walk forward.
+ * Movement strategy that causes the character to walk forward.
  */
 public class WalkBehavior extends MoveBehavior {
 
@@ -18,10 +18,18 @@ public class WalkBehavior extends MoveBehavior {
     }
 
     /**
-     * Executes the walk-based movement.
+     * Executes the walk animation with forward motion.
      */
     @Override
     public void move() {
-        move(false);
+        for (int i = 0; i < NUM_MOVES; i++) {
+            clear();
+            displayCharacter();
+            sleep(300);
+
+            for (int s = 0; s < speed; s++) {
+                pushCharacterForward();
+            }
+        }
     }
 }
