@@ -3,13 +3,25 @@ package observer;
 import java.util.ArrayList;
 
 /**
- * Mom responds specifically based on the baby's cry type.
+ * Mom reacts to a baby's cry based on the type of cry.
  */
 public class Mom extends Observer {
+
+    /**
+     * Registers Mom as an observer for all babies in the list.
+     *
+     * @param babies the babies Mom will observe
+     */
     public Mom(ArrayList<Baby> babies) {
         super(babies);
     }
 
+    /**
+     * Responds to the baby's cry.
+     *
+     * @param cry  the type of cry (ANGRY, HUNGRY, or WET)
+     * @param baby the crying baby
+     */
     @Override
     public void update(Cry cry, Baby baby) {
         switch (cry) {
