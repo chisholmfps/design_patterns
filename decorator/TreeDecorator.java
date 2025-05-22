@@ -3,96 +3,50 @@ package decorator;
 import java.util.ArrayList;
 
 public abstract class TreeDecorator extends Tree {
-    protected Tree tree;
+    private static final String GREEN = "\033[0;32m";
+    private static final String RESET = "\033[0m";
 
     public TreeDecorator(ArrayList<String> lines) {
         super(lines);
     }
 
-    protected void integrateDecor(ArrayList<String> decor) {
-        for (int i = 0; i < lines.size() && i < decor.size(); i++) {
-            String baseLine = lines.get(i);
-            String decorLine = decor.get(i);
-            StringBuilder newLine = new StringBuilder();
+    protected void integrateDecor(ArrayList<String> decor, String color) {
+    for (int i = 0; i < decor.size(); i++) {
+        if (i >= lines.size()) continue;
 
-            int baseIndex = 0;
-            for (int j = 0; j < baseLine.length(); ) {
-                // Preserve ANSI escape codes
-                if (baseLine.charAt(j) == '\033') {
-                    int end = j + 1;
-                    while (end < baseLine.length() && baseLine.charAt(end) != 'm') end++;
-                    end++;
-                    newLine.append(baseLine, j, end);
-                    j = end;
-                    continue;
+        String baseLineWithColors = lines.get(i);
+        String baseLine = baseLineWithColors.replaceAll("\033\\[[;\\d]*m", "");  // Strip ANSI
+        String decorLine = decor.get(i);
+
+        StringBuilder newLine = new StringBuilder();
+        int visualIndex = 0;
+
+        for (int j = 0; j < baseLineWithColors.length(); j++) {
+            char ch = baseLineWithColors.charAt(j);
+
+            if (ch == '\033') {
+                // Copy ANSI code through untouched
+                int mIndex = baseLineWithColors.indexOf('m', j);
+                newLine.append(baseLineWithColors, j, mIndex + 1);
+                j = mIndex;
+            } else {
+                if (
+                    visualIndex < decorLine.length() &&
+                    !Character.isWhitespace(decorLine.charAt(visualIndex))
+                ) {
+                    // Replace with decoration character and apply color
+                    char decorChar = decorLine.charAt(visualIndex);
+                    newLine.append(color).append(decorChar).append("\033[0;32m"); // Reset to green
+                } else {
+                    newLine.append(ch); // Keep base char
                 }
-
-                // Handle R() → red ()
-                if (baseIndex + 2 < decorLine.length()
-                        && decorLine.charAt(baseIndex) == 'R'
-                        && decorLine.charAt(baseIndex + 1) == '('
-                        && decorLine.charAt(baseIndex + 2) == ')') {
-
-                    // Skip 2 visible characters in base
-                    int visibleChars = 0;
-                    while (j < baseLine.length() && visibleChars < 2) {
-                        if (baseLine.charAt(j) == '\033') {
-                            int end = j + 1;
-                            while (end < baseLine.length() && baseLine.charAt(end) != 'm') end++;
-                            end++;
-                            newLine.append(baseLine, j, end);
-                            j = end;
-                        } else {
-                            visibleChars++;
-                            j++;
-                        }
-                    }
-
-                    newLine.append(RED).append("()").append(RESET);
-                    baseIndex += 3;
-                    continue;
-                }
-
-                // Handle W* → white *
-                if (baseIndex + 1 < decorLine.length()
-                        && decorLine.charAt(baseIndex) == 'W'
-                        && decorLine.charAt(baseIndex + 1) == '*') {
-                    newLine.append(WHITE).append('*').append(RESET);
-                    baseIndex += 2;
-                    j++;
-                    continue;
-                }
-
-                // Skip 'Y' (used for alignment in star.txt)
-                char decorChar = (baseIndex < decorLine.length()) ? decorLine.charAt(baseIndex) : ' ';
-                if (decorChar == 'Y') {
-                    baseIndex++;
-                    continue;
-                }
-
-                // Yellow star decorations
-                if ("/\\<>".indexOf(decorChar) >= 0) {
-                    newLine.append(YELLOW).append(decorChar).append(RESET);
-                    baseIndex++;
-                    j++;
-                    continue;
-                }
-
-                // White +
-                if (decorChar == '+') {
-                    newLine.append(WHITE).append('+').append(RESET);
-                    baseIndex++;
-                    j++;
-                    continue;
-                }
-
-                // Fallback: preserve base character
-                newLine.append(baseLine.charAt(j));
-                baseIndex++;
-                j++;
+                visualIndex++;
             }
-
-            lines.set(i, newLine.toString());
         }
+
+        lines.set(i, "\033[0;32m" + newLine.toString());
     }
+}
+
+
 }
