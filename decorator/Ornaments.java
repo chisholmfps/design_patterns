@@ -7,6 +7,11 @@ public class Ornaments extends TreeDecorator {
 
     private Tree tree;
 
+    /**
+     * Creates an Ornaments decorator.
+     *
+     * @param tree the tree to decorate
+     */
     public Ornaments(Tree tree) {
         super(new ArrayList<>(tree.lines));
         this.tree = tree;

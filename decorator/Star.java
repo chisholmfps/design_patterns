@@ -7,6 +7,11 @@ public class Star extends TreeDecorator {
 
     private Tree tree;
 
+    /**
+     * Creates a new Star decorator.
+     *
+     * @param tree the tree to decorate
+     */
     public Star(Tree tree) {
         super(new ArrayList<>(tree.lines));
         this.tree = tree;

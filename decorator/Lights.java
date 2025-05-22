@@ -7,6 +7,11 @@ public class Lights extends TreeDecorator {
 
     private Tree tree;
 
+    /**
+     * Creates a Lights decorator.
+     *
+     * @param tree the tree to decorate
+     */
     public Lights(Tree tree) {
         super(new ArrayList<>(tree.lines));
         this.tree = tree;

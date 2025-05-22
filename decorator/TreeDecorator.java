@@ -6,10 +6,21 @@ public abstract class TreeDecorator extends Tree {
     private static final String GREEN = "\033[0;32m";
     private static final String RESET = "\033[0m";
 
+    /**
+     * Constructs a TreeDecorator with the given tree lines.
+     *
+     * @param lines the current tree lines to decorate
+     */
     public TreeDecorator(ArrayList<String> lines) {
         super(lines);
     }
 
+    /**
+     * Applies a decoration overlay to the tree using the provided pattern and color.
+     *
+     * @param decor the decoration pattern
+     * @param color the color to apply to the decoration
+     */
     protected void integrateDecor(ArrayList<String> decor, String color) {
     for (int i = 0; i < decor.size(); i++) {
         if (i >= lines.size()) continue;
@@ -47,6 +58,4 @@ public abstract class TreeDecorator extends Tree {
         lines.set(i, "\033[0;32m" + newLine.toString());
     }
 }
-
-
 }
