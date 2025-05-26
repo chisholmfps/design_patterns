@@ -4,6 +4,9 @@ public class SpruceTree extends Tree {
     private static final String GREEN = "\033[0;32m";
     private static final String BROWN = "\u001B[38;2;139;69;19m";
 
+    /**
+     * Creates a SpruceTree by reading from a file and applying color formatting.
+     */
     public SpruceTree() {
         super(FileReader.getLines("decorator/spruce-tree.txt"));
         for (int i = 0; i < lines.size(); i++) {
