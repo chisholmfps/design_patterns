@@ -1,8 +1,15 @@
 package state;
 
+/**
+ * HomeState is the default state of the TV.
+ */
 public class HomeState extends Application implements State {
     private TV tv;
 
+    /**
+     * Constructs a HomeState object with a reference to the TV.
+     * @param tv the context TV object
+     */
     public HomeState(TV tv) {
         this.tv = tv;
     }

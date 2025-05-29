@@ -1,8 +1,15 @@
 package state;
 
+/**
+ * NetflixState represents the Netflix mode of the TV.
+ */
 public class NetflixState extends Application implements State {
     private TV tv;
 
+    /**
+     * Constructs a NetflixState and loads sample movies and shows.
+     * @param tv the context TV object
+     */
     public NetflixState(TV tv) {
         this.tv = tv;
         movies.add("Stranger Things");

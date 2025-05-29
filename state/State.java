@@ -1,5 +1,7 @@
 package state;
-
+/**
+ * The State interface defines the required actions for all TV states.
+ */
 public interface State {
     void pressHomeButton();
     void pressNetflixButton();

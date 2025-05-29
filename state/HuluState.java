@@ -1,8 +1,15 @@
 package state;
 
+/**
+ * HuluState represents the Hulu mode of the TV.
+ */
 public class HuluState extends Application implements State {
     private TV tv;
 
+    /**
+     * Constructs a HuluState and loads sample movies and shows.
+     * @param tv the context TV object
+     */
     public HuluState(TV tv) {
         this.tv = tv;
         movies.add("Palm Springs");

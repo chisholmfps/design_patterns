@@ -1,11 +1,17 @@
 package state;
 
+/**
+ * TV is the context class that maintains the current state.
+ */
 public class TV {
     private State homeState;
     private State netflixState;
     private State huluState;
     private State state;
 
+    /**
+     * Constructs a TV with all states initialized.
+     */
     public TV() {
         homeState = new HomeState(this);
         netflixState = new NetflixState(this);
@@ -38,6 +44,10 @@ public class TV {
         return "";
     }
 
+    /**
+     * Changes the current state.
+     * @param state the new state to switch to
+     */
     public void setState(State state) {
         this.state = state;
     }
@@ -54,6 +64,10 @@ public class TV {
         return huluState;
     }
 
+    /**
+     * Delegates the watch request to the current state.
+     * @param title the media title to watch
+     */
     public void watch(String title) {
         state.watch(title);
     }
